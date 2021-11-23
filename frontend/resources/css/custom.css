@@ -1,0 +1,13 @@
+.dataTable .sortable:hover {
+  cursor: pointer;
+  background: #e6e6e6;
+}
+
+.clickable-row:hover {
+  cursor: pointer;
+  background: #e6e6e6;
+}
+
+.fixed-btn {
+    height: 40px
+}

@@ -1,0 +1,62 @@
+version: "3"
+services:
+  compcust:
+    build:
+      args:
+        USER: 1000
+        UID: 1000
+        NODE_VERSION: 16.11.0
+      context: .
+      dockerfile: ./docker-files/Dockerfile
+    image: compcust
+    container_name: compcust
+    restart: unless-stopped
+    working_dir: /var/www
+    depends_on:
+      - mysql
+      - nginx
+    volumes:
+      - ./frontend:/var/www/frontend
+      - ./backend:/var/www/backend
+    networks:
+      - compcust-network
+
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: backend
+      MYSQL_ROOT_PASSWORD:
+#      MYSQL_USER: ${DB_USERNAME}
+#      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ./dbdata:/var/lib/mysql
+      - ./docker-files/mysql/initdb:/docker-entrypoint-initdb.d
+      - ./docker-files/mysql/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - compcust-network
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    restart: unless-stopped
+    ports:
+      - "8000:80"   # frontend
+      - "8080:8080" # backend
+    volumes:
+      - ./frontend:/var/www/frontend
+      - ./backend:/var/www/backend
+      - ./docker-files/nginx:/etc/nginx/conf.d
+    networks:
+      - compcust-network
+
+networks:
+  compcust-network:
+    driver: bridge
+
+volumes:
+  dbdata:
+    driver: local
