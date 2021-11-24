@@ -121,7 +121,7 @@ class CustomerController extends Controller
      * @param mixed $id
      * @return \Illuminate\Contracts\View\Factory
      */
-    public function createAndAttachToCompanyCreate(Api $api, $id)
+    public function createAndAttachToCompanyForm(Api $api, $id)
     {
         $company = $api->get("companies/$id")->send()->object();
 
@@ -151,7 +151,7 @@ class CustomerController extends Controller
      * @param int $id
      * @return \Illuminate\Contracts\View\Factory
      */
-    public function createRelationsToCompanyCreate(Request $request, Api $api, $id)
+    public function createRelationsToCompanyForm(Request $request, Api $api, $id)
     {
         $company =  $api->get("companies/$id")->send()->object();
         $customers = $api->get('customers', $request->all())->paginate(15);
@@ -179,8 +179,6 @@ class CustomerController extends Controller
         $all = $request->input('ids', []);  // IDs of all customers on the page
         $checked = $request->input('checked', []);  // IDs of checked customers on the page
         $unchecked = array_diff($all, $checked);
-
-        dd($api->put("companies/$id/customers", ['ids' => $checked])->object());
 
         if ($checked) {
             $api->put("companies/$id/customers", ['ids' => $checked])->send()->object();

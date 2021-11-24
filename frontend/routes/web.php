@@ -30,10 +30,10 @@ Route::get('/companies/{id}', [CompanyController::class, 'show'])->name('compani
 Route::put('/companies/{id}', [CompanyController::class, 'update'])->name('companies.update');
 Route::get('/companies/{id}/edit', [CompanyController::class, 'edit'])->name('companies.edit');
 
-Route::get('/companies/{id}/customers', [CustomerController::class, 'createRelationsToCompanyCreate'])->name('companies.customers.index');
-Route::get('/companies/{id}/customers/create', [CustomerController::class, 'createAndAttachToCompanyCreate'])->name('companies.customers.create');
-Route::post('/companies/{id}/customers', [CustomerController::class, 'createAndAttachToCompanyStore'])->name('companies.customers.store');
+Route::get('/companies/{id}/customers', [CustomerController::class, 'createRelationsToCompanyForm'])->name('companies.customers.index');
 Route::put('/companies/{id}/customers', [CustomerController::class, 'createRelationsToCompanyStore'])->name('companies.customers.update');
+Route::get('/companies/{id}/customers/create', [CustomerController::class, 'createAndAttachToCompanyForm'])->name('companies.customers.create');
+Route::post('/companies/{id}/customers', [CustomerController::class, 'createAndAttachToCompanyStore'])->name('companies.customers.store');
 
 Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
 Route::get('/customers/create', [CustomerController::class, 'create'])->name('customers.create');
