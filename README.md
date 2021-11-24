@@ -1,22 +1,19 @@
 # Compcust
 
-##The task
+## The task
 
-Необходимо реализовать простую CRM систему на основе AdminLTE:
-1. Вход осуществляется с помощью логина и пароль;
-2. В CRM должен быть список компаний, возможность создать, изменить, удалить.
-Должны быть валидаторы входящих данных;
-3. Должен быть список клиентов компаний, возможность создать, изменить, удалить. Должны
-быть валидаторы входящих данных;
-4. Клиенты в базе данных должны быть связаны с компаниями;
-5. Таблицы должны быть описаны с помощь миграций;
-6. Таблицы должны наполняться тестовыми данными (возможность сгенерировать записи компаний и клиентов автоматически);
-7. Реализовать три rest api метода:
-   1. get_companies - должен возвращать список компаний в формате json с возможностью
-      пагинации;
-   2. get_clients - принимает айди компании, возвращает список клиентов в json с возможностью пагинации;
-   3. get_client_companies - принимает айди клиента, возвращает список компаний связанных с клиентом.
-8. При доступе к API должна происходить bearer авторизация.
+Make a simple CRM system based on AdminLTE:
+1. Authentication with login and password;
+2. CRM must have a list of companies, ability to create, edit and delete them. Data for creation and editing must be validated;
+3. CRM must have a list of customers, ability to create, edit and delete them. Data for creation and editing must be validated;
+4. Database customer and client records should be bound;
+5. Database tables must be described with migrations;
+6. Database customer and client records could be generated automatically;
+7. Implement three REST API methods:
+    1. get_companies - returns a list of companies in JSON format with ability to paginate;
+    2. get_customers - returns a list of company's customers by its unique ID in JSON format with ability to paginate;
+    3. get_customer_companies - returns a list of customer's companies by his unique ID in JSON format with ability to paginate;
+8. API endpoints must be accessed with a bearer authorization 
 
 ## Preview info
 
@@ -29,13 +26,25 @@ self-sufficient API.
     1. Automatic. Run bash script file `./passetup.sh`  
     OR 
     2. Manual: 
-       - Set a password for `MYSQL_ROOT_PASSWORD` variable in `docker-compose.yml` file.
-       - Set the same password for `DB_PASSWORD` variable in `backend/.env` file.
+        - run:
+            ```bash
+            cp ./docker-compose.yml.example ./docker-compose.yml
+            cp ./frontend.end.example ./frontend/.env
+            cp ./backend/.env.example ./backend/.env
+            ```
+        - set a password for `MYSQL_ROOT_PASSWORD` variable in `docker-compose.yml` file;
+        - set the same password for `DB_PASSWORD` variable in `backend/.env` file
 
 
-2. Start Docker and run migrations:
+2. Start Docker:
 ```bash
 docker-compose up -d
+```
+
+3. Install packages and run migrations:
+```bash
+docker-compose exec -w /var/www/frontend compcust composer update
+docker-compose exec -w /var/www/backend compcust composer update
 docker-compose exec -w /var/www/backend compcust php artisan migrate
 ```
 
@@ -57,5 +66,11 @@ Backend command line:
 docker-compose exec -w /var/www/backend compcust bash
 ```
 
-##Api docs
-See api.yaml.
+## Api docs
+See api.yaml
+
+## Other info
+**Notice:** If you want to restart Docker with --build flag and get "PermissionError: [Errno 13]", execute:
+```bash
+sudo chown $USER:$USER -R dbdata
+```
