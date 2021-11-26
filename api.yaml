@@ -321,7 +321,7 @@ paths:
                         - "The name has already been taken."
   /companies/{id}:
     get:
-      summary: "Obtain company by it's unique id"
+      summary: "Obtain company by its unique ID"
       description: "Returns the single company"
       tags:
         - Company
@@ -351,7 +351,6 @@ paths:
                 phone: "1-570-506-3986"
                 created_at: "2021-11-05T12:14:40.000000Z"
                 updated_at: "2021-11-05T12:14:40.000000Z"
-               
         "401":
           $ref: "#/components/responses/401"
         "404":
@@ -654,7 +653,7 @@ paths:
                         - "The email must be a valid email address."
   /customers/{id}:
     get:
-      summary: "Obtain customer by it's unique id"
+      summary: "Obtain customer by his unique ID"
       description: "Returns a single customer"
       tags:
         - Customer
