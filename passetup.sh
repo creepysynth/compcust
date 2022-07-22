@@ -1,6 +1,6 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
-passwrd=$(openssl rand -base64 12)
+passwrd=$(tr -dc A-Za-z0-9 </dev/urandom | head -c 12)
 
 if [ ! -s ./docker-compose.yml.example ]
 then
